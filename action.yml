@@ -4,6 +4,11 @@ description: 'Deploying your Jekyll repo back to the gh-pages branch of the same
 branding: 
   icon: 'upload-cloud'
   color: 'blue'
+inputs:
+  github_branch:
+    description: Branch to deploy to. Defaults to gh-pages
+    require: true
+    default: gh-pages
 runs:
   using: 'docker'
   image: 'Dockerfile'

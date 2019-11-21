@@ -1,20 +1,25 @@
-#!/bin/sh
-echo '👍 ENTRYPOINT HAS STARTED—INSTALLING THE GEM BUNDLE'
+#!/bin/bash
+BRANCH=${GITHUB_BRANCH:-gh-pages}
+mkdir build
+cd build
+remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" 
+remote_branch=${INPUT_GITHUB_BRANCH:-gh-pages} 
+git init 
+git remote add origin $remote_repo 
+git config user.name "${GITHUB_ACTOR}" 
+git config user.email "${GITHUB_ACTOR}@users.noreply.github.com" 
+git fetch 
+git checkout $remote_branch
+
+cd ..
 bundle install
 bundle list | grep "jekyll ("
-echo '👍 BUNDLE INSTALLED—BUILDING THE SITE'
-bundle exec jekyll build
-echo '👍 THE SITE IS BUILT—PUSHING IT BACK TO GITHUB-PAGES'
+bundle exec rake generate
 cd build
-remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" && \
-remote_branch="gh-pages" && \
-git init && \
-git config user.name "${GITHUB_ACTOR}" && \
-git config user.email "${GITHUB_ACTOR}@users.noreply.github.com" && \
-git add . && \
-echo -n 'Files to Commit:' && ls -l | wc -l && \
-git commit -m'action build' > /dev/null 2>&1 && \
-git push --force $remote_repo master:$remote_branch > /dev/null 2>&1 && \
-rm -fr .git && \
+
+git add . 
+echo -n 'Files to Commit:' && ls -l | wc -l 
+git commit -m'action build' > /dev/null  
+git push > /dev/null  
+rm -fr .git 
 cd ../
-echo '👍 GREAT SUCCESS!'

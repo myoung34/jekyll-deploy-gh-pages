@@ -1,9 +1,6 @@
-
-> **This action has been updated from the first beta version of GH Actions to the new beta version of GH Actions. See below for the new structure required in your workflow.**
-
 # A GitHub Action for Custom Jekyll Builds on GitHub Pages
 
-A GitHub Action for building and deploying a Jekyll repo back to its `gh-pages` branch. 
+A GitHub Action for building and deploying a Jekyll repo back to a branch. 
 
 **Why not just let GitHub Pages build it? Becaues this way we can use our own custom Jekyll plugins and build scripts.**
 
@@ -13,6 +10,9 @@ A GitHub Action for building and deploying a Jekyll repo back to its `gh-pages` 
 ## Environment Variables
 * `GITHUB_ACTOR`: Username of repo owner or object intiating the action (GitHub Provides)
 * `GITHUB_REPO`: Owner/Repository (GitHub Provides)
+
+## Inputs
+* `github_branch`: Branch to deploy to. Defaults to `gh-pages`
 
 ## Example
 
@@ -31,10 +31,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
           GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
-        uses: BryanSchuetz/jekyll-deploy-gh-pages@master
+        with:
+          GITHUB_BRANCH: master
+        uses: myoung34/jekyll-deploy-gh-pages@master
 ```
 
-Clones the repo, builds the site, and commits it back to the gh-pages branch of the repository. That's it. Just add the above example to a `main.yml` file in the `.github/workflows` directory of your repository—see caveats below. 
+Clones the repo, builds the site, and commits it back to the branch of the repository. That's it. Just add the above example to a `main.yml` file in the `.github/workflows` directory of your repository—see caveats below. 
 
 ## Caveats
 
