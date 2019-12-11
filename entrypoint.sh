@@ -19,7 +19,7 @@ cd build
 
 git add . 
 echo -n 'Files to Commit:' && ls -l | wc -l 
-git commit -m'action build' > /dev/null  
+git commit -m"action build `date`" > /dev/null  
 git push > /dev/null  
 rm -fr .git 
 cd ../
